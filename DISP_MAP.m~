@@ -1,4 +1,4 @@
-function [] = DISP_MAP(ImageL, ImageR,supportWindowSize)
+function [ matrixDisp ] = DISP_MAP(ImageL, ImageR,supportWindowSize)
 
 matrixL = imread(ImageL);
 matrixR = imread(ImageR);
@@ -18,18 +18,14 @@ end
 %    matrixL = imresize(matrixL,[300 300]);
 %end
 searchWindowSize=supportWindowSize*3;
-matrixDisp = zeros(size(matrixR));
+matrixDisp = matrixL;
 for row = 1: size(matrixL, 1)
-    row
     for col = 1: size(matrixL, 2)
         [supportWindow,empty,empty1] = EXTRACT_WIN(matrixL,supportWindowSize,row,col);
         [searchWindow,topRow,topCol] =  EXTRACT_WIN(matrixR,searchWindowSize,row,col);
-        matrixDisp(row, col)= PIXEL_DISP(searchWindow,supportWindow,[topRow,topCol],[row,col]);
-        matrixDisp(row, col)
+        matrixDisp(row, col, 1)=PIXEL_DISP(searchWindow,[topRow,topCol],[row,col]);
     end
 end
-matrixDisp = 2 .* matrixDisp ./ (255 - 0);
-imshow(matrixDisp, [])
-size(matrixDisp)
+imshow(matrixDisp);
 %imwrite(matrixDisp,'Result.png');
 end
