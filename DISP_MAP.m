@@ -27,7 +27,7 @@ for row = 1: size(matrixL, 1)
         matrixDisp(row, col)= PIXEL_DISP(searchWindow,supportWindow,[topRow,topCol],[row,col]);
     end
 end
-matrixDisp = 1 + 2.*(matrixDisp - min(matrixDisp))./(max(matrixDisp) - min(matrixDisp));
+matrixDisp = 1 + 2.*(matrixDisp - min(matrixDisp))./(max(matrixDisp) - min(matrixDisp))
 imshow(matrixDisp, [])
 size(matrixDisp)
 %imwrite(matrixDisp,'Result.png');
