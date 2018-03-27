@@ -25,10 +25,9 @@ for row = 1: size(matrixL, 1)
         [supportWindow,empty,empty1] = EXTRACT_WIN(matrixL,supportWindowSize,row,col);
         [searchWindow,topRow,topCol] =  EXTRACT_WIN(matrixR,searchWindowSize,row,col);
         matrixDisp(row, col)= PIXEL_DISP(searchWindow,supportWindow,[topRow,topCol],[row,col]);
-        matrixDisp(row, col)
     end
 end
-matrixDisp = 2 .* matrixDisp ./ (255 - 0);
+matrixDisp = 1 + 2.*(matrixDisp - min(matrixDisp))./(max(matrixDisp) - min(matrixDisp));
 imshow(matrixDisp, [])
 size(matrixDisp)
 %imwrite(matrixDisp,'Result.png');
