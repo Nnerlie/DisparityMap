@@ -4,7 +4,7 @@ matrixL = imread(ImageL);
 matrixR = imread(ImageR);
 
 if size(matrixL,3)==3
-    matrixR = rgb2gray(matrixR);
+    matrixL = rgb2gray(matrixL);
 end
 if size(matrixR,3)==3
     matrixR = rgb2gray(matrixR);
