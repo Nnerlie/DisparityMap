@@ -21,9 +21,9 @@ searchWindowSize=supportWindowSize*3;
 matrixDisp = matrixL;
 for row = 1: size(matrixL, 1)
     for col = 1: size(matrixL, 2)
-        supportWindow = EXTRACT_WIN(matrixL,supportWindowSize,row,col);
-        searchWindow =  EXTRACT_WIN(matrixR,searchWindowSize,row,col);
-        matrixDisp(row, col, 1)=PIXEL_DISP(supportWindow,searchWindow);
+        [supportWindow,empty,empty1] = EXTRACT_WIN(matrixL,supportWindowSize,row,col);
+        [searchWindow,topRow,topCol] =  EXTRACT_WIN(matrixR,searchWindowSize,row,col);
+        matrixDisp(row, col, 1)=PIXEL_DISP(supportWindow,searchWindow,[topRow,topCol],[row,col]);
     end
 end
 imshow(matrixDisp);
