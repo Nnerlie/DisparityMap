@@ -18,16 +18,22 @@ end
 %    matrixL = imresize(matrixL,[300 300]);
 %end
 searchWindowSize=supportWindowSize*3;
+
+matrixL = padarray(matrixL, [floor(searchWindowSize/2) floor(searchWindowSize/2)], 0, 'both');
+matrixR = padarray(matrixR, [floor(searchWindowSize/2) floor(searchWindowSize/2)], 0, 'both');
+halfSupport = floor(supportWindowSize/2);
+halfsearch = floor(searchWindowSize/2);
 matrixDisp = zeros(size(matrixR));
-for row = 1: size(matrixL, 1)
+for row = 1: (size(matrixL, 1) - searchWindowSize)
     row
-    for col = 1: size(matrixL, 2)
-        [supportWindow,empty,empty1] = EXTRACT_WIN(matrixL,supportWindowSize,row,col);
-        [searchWindow,topRow,topCol] =  EXTRACT_WIN(matrixR,searchWindowSize,row,col);
-        matrixDisp(row, col)= PIXEL_DISP(searchWindow,supportWindow,[topRow,topCol],[row,col]);
+    for col = 1: (size(matrixL, 2) - searchWindowSize)
+        searchWindow = matrixL(row:(row+searchWindowSize), col:(col+searchWindowSize));
+        supportWindow =  matrixR(row+(halfsearch-halfSupport):(row+halfsearch+halfSupport), col+(halfsearch-halfSupport):(col+halfSupport+halfsearch));
+        matrixDisp(row+halfsearch, col+halfsearch)= PIXEL_DISP(searchWindow,supportWindow,[row,col],[row+halfsearch,col+halfsearch]);
     end
 end
-matrixDisp = 1 + 2.*(matrixDisp - min(matrixDisp))./(max(matrixDisp) - min(matrixDisp))
+matrixDisp = matrixDisp(halfsearch+1:size(matrixDisp,1)-halfsearch-1, halfsearch+1:size(matrixDisp,2)-halfsearch-1);
+matrixDisp = 255 * mat2gray(matrixDisp)
 imshow(matrixDisp, [])
 size(matrixDisp)
 %imwrite(matrixDisp,'Result.png');
