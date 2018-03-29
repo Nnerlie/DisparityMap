@@ -33,8 +33,7 @@ for row = 1: (size(matrixL, 1) - searchWindowSize)
     end
 end
 matrixDisp = matrixDisp(halfsearch+1:size(matrixDisp,1)-halfsearch-1, halfsearch+1:size(matrixDisp,2)-halfsearch-1);
-matrixDisp = 255 * mat2gray(matrixDisp)
+matrixDisp = 255 * mat2gray(matrixDisp);
 imshow(matrixDisp, [])
-size(matrixDisp)
 %imwrite(matrixDisp,'Result.png');
 end
